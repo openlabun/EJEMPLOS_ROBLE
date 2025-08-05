@@ -10,6 +10,7 @@ function AdminPage() {
     try {
       const response = await getAllTickets();
       setTickets(response.data);
+      console.log(response.data)
     } catch (error) {
       console.error("Error al obtener tickets (admin)", error);
     }
@@ -25,10 +26,6 @@ function AdminPage() {
       <main className="max-w-6xl mx-auto p-8">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-semibold text-gray-800">Panel de Administrador</h1>
-          {/* Futuro botón para crear manualmente */}
-          <button className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
-            + Nuevo Ticket
-          </button>
         </div>
         <TicketTable tickets={tickets} />
       </main>

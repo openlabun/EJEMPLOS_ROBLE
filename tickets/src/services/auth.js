@@ -8,8 +8,8 @@ export const register = (userData) => {
   return API.post(`/auth/tickets_d89e3cf948/signup-direct`, userData);
 };
 
-export const resetPassword = (data) => {
-  return API.post(`/auth/tickets_d89e3cf948/reset-password`, data);
+export const resetPassword = (email) => {
+  return API.post(`/auth/tickets_d89e3cf948/forgot-password`, email);
 };
 
 export const logout = () => {

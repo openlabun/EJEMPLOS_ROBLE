@@ -23,3 +23,21 @@ export const getAllTickets = () => {
     }
   });
 }
+
+export const getTicketById = (id) => {
+  return API.get("/database/tickets_d89e3cf948/read", {
+    params: {
+      tableName: "tickets",
+      _id: id,
+    },
+  });
+};
+
+export const updateTicket = (idValue, updates, idColumn = '_id') => {
+  return API.put('/database/tickets_d89e3cf948/update', {
+    tableName: 'tickets',
+    idColumn,
+    idValue,
+    updates,
+  });
+};

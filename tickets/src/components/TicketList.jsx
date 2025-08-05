@@ -1,4 +1,8 @@
+import { useNavigate } from "react-router-dom";
+
 function TicketList({ tickets }) {
+  const navigate = useNavigate();
+
   return (
     <div className="space-y-4">
       {tickets.length === 0 ? (
@@ -8,7 +12,11 @@ function TicketList({ tickets }) {
           {tickets.map((ticket) => (
             <li
               key={ticket._id}
-              className="bg-white rounded-lg shadow p-4 flex flex-col gap-1"
+              onClick={() => navigate(`/tickets/${ticket._id}`)}
+              className="bg-white rounded-lg shadow p-4 flex flex-col gap-1 cursor-pointer hover:shadow-md transition border border-transparent hover:border-blue-300"
+              tabIndex={0}
+              onKeyDown={e => { if (e.key === "Enter") navigate(`/tickets/${ticket._id}`) }}
+              title="Ver detalles del ticket"
             >
               <div className="flex justify-between items-center">
                 <h2 className="text-lg font-semibold text-gray-800">
@@ -34,6 +42,9 @@ function TicketList({ tickets }) {
                 <span>Prioridad: <strong>{ticket.priority}</strong></span>
                 <span>Creado: {new Date(ticket.create_at).toLocaleDateString()}</span>
               </div>
+              <span className="mt-2 text-blue-600 text-xs font-medium underline decoration-dotted">
+                Ver detalles
+              </span>
             </li>
           ))}
         </ul>

@@ -15,7 +15,20 @@ API.interceptors.request.use((config) => {
   return config;
 });
 
+// Añade el token de acceso automáticamente
 const refreshAuthLogic = async (failedRequest) => {
+  const { config } = failedRequest.response;
+
+  // No renovar si es una petición al login, register o reset-password
+  const isAuthRequest =
+    config.url.includes("/login") ||
+    config.url.includes("/signup-direct") ||
+    config.url.includes("/forgot-password");
+
+  if (isAuthRequest) {
+    return Promise.reject(failedRequest);
+  }
+
   try {
     const oldRefresh = localStorage.getItem("refreshToken");
 
@@ -26,11 +39,9 @@ const refreshAuthLogic = async (failedRequest) => {
 
     const { accessToken, refreshToken: newRefresh } = response.data;
 
-    // Guardar nuevos tokens
     localStorage.setItem("accessToken", accessToken);
     localStorage.setItem("refreshToken", newRefresh);
 
-    // Reintenta la solicitud original con el nuevo token
     failedRequest.response.config.headers.Authorization = `Bearer ${accessToken}`;
 
     return Promise.resolve();
@@ -42,6 +53,7 @@ const refreshAuthLogic = async (failedRequest) => {
     return Promise.reject(err);
   }
 };
+
 
 
 // Añadir interceptor de refresh

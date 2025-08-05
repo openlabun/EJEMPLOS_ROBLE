@@ -1,5 +1,5 @@
-import { use, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { login } from '../services/auth'
 import { isAxiosError } from 'axios';
 
@@ -70,10 +70,18 @@ function LoginForm() {
       </div>
       <button
         type="submit"
-        className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+        className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition cursor-pointer"
       >
         Iniciar Sesión
       </button>
+      <p className="text-center mt-2 text-sm">
+        <Link
+          to="/reset-password"
+          className="text-blue-600 hover:underline"
+        >
+          ¿Olvidaste tu contraseña?
+        </Link>
+      </p>
     </form>
   );
 }

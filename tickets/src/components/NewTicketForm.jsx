@@ -23,7 +23,7 @@ function NewTicketForm({ onTicketCreated }) {
         description,
         priority,
         status: "in progress",
-        create_at: new Date().toISOString(),
+        create_at: new Date().toLocaleString(),
       };
 
       const response = await createTicket(newTicket);
@@ -51,7 +51,7 @@ function NewTicketForm({ onTicketCreated }) {
       <div className="flex justify-end mb-4">
         <button
           onClick={() => setShowForm(!showForm)}
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition cursor-pointer"
         >
           {showForm ? "Cancelar" : "+ Crear Ticket"}
         </button>
