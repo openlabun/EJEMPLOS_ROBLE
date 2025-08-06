@@ -3,13 +3,18 @@ import { useNavigate } from "react-router-dom";
 function TicketList({ tickets }) {
   const navigate = useNavigate();
 
+  // Ordena por fecha descendente (más reciente primero)
+  const sortedTickets = tickets
+    .slice() // copia para no mutar props
+    .sort((a, b) => new Date(b.create_at) - new Date(a.create_at));
+
   return (
     <div className="space-y-4">
-      {tickets.length === 0 ? (
+      {sortedTickets.length === 0 ? (
         <p className="text-gray-500">No tienes tickets registrados.</p>
       ) : (
         <ul className="space-y-3">
-          {tickets.map((ticket) => (
+          {sortedTickets.map((ticket) => (
             <li
               key={ticket._id}
               onClick={() => navigate(`/tickets/${ticket._id}`)}
@@ -36,11 +41,11 @@ function TicketList({ tickets }) {
                 </span>
               </div>
 
-              <p className="text-sm text-gray-600">{ticket.description}</p>
+              <p className="text-sm text-gray-600"><strong>Descripción:</strong> {ticket.description}</p>
 
               <div className="text-sm text-gray-500 flex gap-3 mt-2">
                 <span>Prioridad: <strong>{ticket.priority}</strong></span>
-                <span>Creado: {new Date(ticket.create_at).toLocaleDateString()}</span>
+                <span>Creado: {new Date(ticket.create_at).toLocaleString()}</span>
               </div>
               <span className="mt-2 text-blue-600 text-xs font-medium underline decoration-dotted">
                 Ver detalles

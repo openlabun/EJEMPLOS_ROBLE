@@ -33,7 +33,7 @@ const refreshAuthLogic = async (failedRequest) => {
     const oldRefresh = localStorage.getItem("refreshToken");
 
     const response = await axios.post(
-      "https://roble-api.openlab.uninorte.edu.co/auth/tickets_d89e3cf948/refresh-token",
+      `https://roble-api.openlab.uninorte.edu.co/auth/${import.meta.env.VITE_PROJECT_ID}/refresh-token`,
       { refreshToken: oldRefresh }
     );
 

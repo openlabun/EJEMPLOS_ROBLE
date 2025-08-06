@@ -22,8 +22,8 @@ function NewTicketForm({ onTicketCreated }) {
         tittle,
         description,
         priority,
-        status: "in progress",
-        create_at: new Date().toLocaleString(),
+        status: "open",
+        create_at: new Date().toISOString(),
       };
 
       const response = await createTicket(newTicket);
