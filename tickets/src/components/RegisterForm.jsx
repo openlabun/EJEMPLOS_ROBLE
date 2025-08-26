@@ -20,7 +20,7 @@ function RegisterForm() {
     try {
       await register(userData);
       alert('Cuenta creada con éxito. Ya puedes iniciar sesión.');
-      navigate('/login');
+      navigate('/');
     } catch (err) {
       if (isAxiosError(err)) {
         const msg = err.response?.data?.message || 'Error inesperado al registrarse.';

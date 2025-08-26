@@ -76,7 +76,7 @@ function LoginForm() {
       </button>
       <p className="text-center mt-2 text-sm">
         <Link
-          to="/reset-password"
+          to="/forgot-password"
           className="text-blue-600 hover:underline"
         >
           ¿Olvidaste tu contraseña?
