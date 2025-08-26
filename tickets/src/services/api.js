@@ -19,7 +19,6 @@ API.interceptors.request.use((config) => {
 const refreshAuthLogic = async (failedRequest) => {
   const { config } = failedRequest.response;
 
-  // No renovar si es una petición al login, register o reset-password
   const isAuthRequest =
     config.url.includes("/login") ||
     config.url.includes("/signup-direct") ||
