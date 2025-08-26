@@ -2,6 +2,11 @@
 
 Start by copying the `.env_sample` file to `.env` and filling in the required values.
 
+This is the table that was used on Roble:
+
+<img width="1606" height="338" alt="image" src="https://github.com/user-attachments/assets/a8ac3ec0-e0e1-4760-967f-ab0dd97ea575" />
+
+
 ## Linux / Mac
 
 ```bash
