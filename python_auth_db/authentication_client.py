@@ -1,4 +1,6 @@
 import requests
+import time
+
 
 class AuthenticationClient:
     """
@@ -19,12 +21,14 @@ class AuthenticationClient:
             resp.raise_for_status()
         except requests.HTTPError:
             print(f"Login error {resp.status_code}: {resp.text}")
+            time.sleep(2)
             return False
         data = resp.json()
         self.access_token = data.get('accessToken')
         self.refresh_token = data.get('refreshToken')
         self.session.headers.update({'Authorization': f'Bearer {self.access_token}'})
         print("Login exitoso.")
+        time.sleep(1)
         return True
 
     def logout(self) -> bool:
@@ -34,11 +38,13 @@ class AuthenticationClient:
             resp.raise_for_status()
         except requests.HTTPError:
             print(f"Logout error {resp.status_code}: {resp.text}")
+            time.sleep(2)
             return False
         self.session.headers.pop('Authorization', None)
         self.access_token = None
         self.refresh_token = None
         print("Logout exitoso.")
+        time.sleep(1)
         return True
 
     def signup(self) -> bool:
@@ -49,9 +55,26 @@ class AuthenticationClient:
         resp = requests.post(url, json={'email': new_email, 'password': new_password, 'name': nombre})
         if resp.status_code in (200, 201):
             print("Usuario creado exitosamente.")
+            time.sleep(1)
             return True
         else:
             print(f"Error al crear usuario {resp.status_code}: {resp.text}")
+            time.sleep(2)
+            return False
+
+    def signupFast(self) -> bool:
+        url = f"{self.auth_url}/signup-direct"
+        new_email = input("Email del nuevo usuario: ")
+        new_password = 'ThePassword!1'
+        nombre = new_email.split('@')[0]
+        resp = requests.post(url, json={'email': new_email, 'password': new_password, 'name': nombre})
+        if resp.status_code in (200, 201):
+            print("Usuario creado exitosamente.")
+            time.sleep(1)
+            return True
+        else:
+            print(f"Error al crear usuario {resp.status_code}: {resp.text}")
+            time.sleep(2)
             return False
 
     def refresh(self) -> bool:
@@ -65,18 +88,22 @@ class AuthenticationClient:
         resp = self.session.post(url, json=payload, headers=headers)
         if resp.status_code not in (200, 201):
             print(f"Error al refrescar token {resp.status_code}: {resp.text}")
+            time.sleep(2)
             return False
         try:
             data = resp.json()
         except ValueError:
             print(f"Respuesta no es JSON: {resp.text}")
+            time.sleep(2)
             return False
         self.access_token = data.get('accessToken')
         if not self.access_token:
             print(f"No se recibió accessToken: {data}")
+            time.sleep(2)
             return False
         self.session.headers.update({'Authorization': f'Bearer {self.access_token}'})
         print("Token renovado exitosamente.")
+        time.sleep(1)
         return True
 
     def show_tokens(self) -> None:
